@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" android:paddingLeft="16dp"
+android:paddingRight="16dp"
+android:paddingTop="16dp"
+android:background="@drawable/muur"
+android:paddingBottom="16dp" tools:context=".MainActivity"
+    android:id="@+id/deze">
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Image"
+    android:id="@+id/I_Button"
+    android:layout_marginBottom="33dp"
+    android:layout_marginLeft="35dp"
+    android:layout_marginStart="35dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text"
+        android:id="@+id/T_Button"
+        android:layout_marginTop="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/I_Button"
+        android:layout_alignStart="@+id/I_Button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Img+txt"
+        android:id="@+id/IT_Button"
+        android:layout_marginRight="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_alignTop="@+id/T_Button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Video"-->
+        <!--android:id="@+id/V_Button"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound"
+        android:id="@+id/S_Button"
+        android:layout_alignTop="@+id/I_Button"
+        android:layout_alignRight="@+id/IT_Button"
+        android:layout_alignEnd="@+id/IT_Button" />
+</RelativeLayout>
