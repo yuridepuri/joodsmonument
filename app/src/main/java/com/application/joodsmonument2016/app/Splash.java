@@ -1,10 +1,9 @@
-package com.example.patrickweijs.myapplication;
+package com.application.joodsmonument2016.app;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
 
 /**
  * Created by Yuri on 30-8-2015.
