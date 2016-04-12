@@ -18,7 +18,11 @@ import java.io.IOException;
  * Created by Jaarbeurs on 12-4-2016.
  */
 public class Databasehelper extends SQLiteOpenHelper {
+
+    private static Databasehelper theInstance = null;
     private final Context fContext;
+    private SQLiteDatabase database;
+
 static final String TAG = "Yuri";
     Databasehelper(Context context) {
         super(context, "sampledb", null, 1);
@@ -30,7 +34,7 @@ static final String TAG = "Yuri";
         db.execSQL("CREATE TABLE joodsmonumentverhalen ("
                 + "_id INTEGER PRIMARY KEY,"
                 + "naam TEXT,"
-                + "verhaal TEXT"
+                + "verhaal_row_item TEXT"
                 + ");");
 
         //Add default records to animals
@@ -49,9 +53,9 @@ static final String TAG = "Yuri";
                 if ((eventType == XmlPullParser.START_TAG) &&(_xml.getName().equals("record"))){
                     //Record tag found, now get values and insert record
                     String _Naam = _xml.getAttributeValue(null, "naam");
-                    String _Verhaal = _xml.getAttributeValue(null, "verhaal");
+                    String _Verhaal = _xml.getAttributeValue(null, "verhaal_row_item");
                     _Values.put("naam", _Naam);
-                    _Values.put("verhaal", _Verhaal);
+                    _Values.put("verhaal_row_item", _Verhaal);
                     db.insert("joodsmonumentverhalen", null, _Values);
                 }
                 eventType = _xml.next();
@@ -85,10 +89,20 @@ static final String TAG = "Yuri";
         onCreate(db);
     }
 
-    public Cursor getVerhalen(){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query("verhalen", null, null, null, null, null, "naam");
-        return c;
+    public Cursor getAllData () {
+
+        String buildSQL = "SELECT * FROM " + "joodsmonumentverhalen";
+
+        Log.d(TAG, "getAllData SQL: " + buildSQL);
+
+        return database.rawQuery(buildSQL, null);
     }
+
+
+//    public Cursor getVerhalen(){
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor c = db.query("verhalen", null, null, null, null, null, "naam");
+//        return c;
+//    }
 }
 
