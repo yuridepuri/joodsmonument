@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -26,10 +27,10 @@ static final String TAG = "Yuri";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE animals ("
+        db.execSQL("CREATE TABLE joodsmonumentverhalen ("
                 + "_id INTEGER PRIMARY KEY,"
-                + "title TEXT,"
-                + "color TEXT"
+                + "naam TEXT,"
+                + "verhaal TEXT"
                 + ");");
 
         //Add default records to animals
@@ -82,6 +83,12 @@ static final String TAG = "Yuri";
                 + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS animals");
         onCreate(db);
+    }
+
+    public Cursor getVerhalen(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("verhalen", null, null, null, null, null, "naam");
+        return c;
     }
 }
 
