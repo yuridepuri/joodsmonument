@@ -20,13 +20,23 @@ import java.io.IOException;
 public class Databasehelper extends SQLiteOpenHelper {
 
     private static Databasehelper theInstance = null;
-    private final Context fContext;
+ private Context fContext;
     private SQLiteDatabase database;
 
 static final String TAG = "Yuri";
-    Databasehelper(Context context) {
-        super(context, "sampledb", null, 1);
-        fContext = context;
+
+
+   public Databasehelper(Context context, String name,
+                          SQLiteDatabase.CursorFactory factory, int version) {
+       super(context, name, factory, version);
+    }
+
+    public static Databasehelper getInstance(Context ctx){
+        if (theInstance == null)
+            theInstance =
+                    new Databasehelper(ctx, "joodsmonumentverhalen",
+                            null, Constants.DATABASE_VERSION);
+        return theInstance;
     }
 
     @Override

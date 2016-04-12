@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 public class MainActivity extends Activity {
     Databasehelper dbh;
@@ -30,10 +33,24 @@ public class MainActivity extends Activity {
     TextView tv;
     ListView lv;
 
+    // TodoDatabaseHandler is a SQLiteOpenHelper class connecting to SQLite
+   Databasehelper handler = new Databasehelper(this);
+    // Get access to the underlying writeable database
+    SQLiteDatabase db = handler.getWritableDatabase();
+    // Query for items from the database and get a cursor back
+    Cursor todoCursor = db.rawQuery("SELECT  * FROM todo_items", null);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+setContentView(R.layout.uitgelicht);
+        dbh = Databasehelper.getInstance(getApplicationContext());
+        context = this;
+        lv= (ListView)findViewById(R.id.list);
 
+        theCursor = dbh.getAllData();
+        adapter = new MyCursorAdapter(this, theCursor);
+        lv.setAdapter(adapter);
     }
 
     @Override

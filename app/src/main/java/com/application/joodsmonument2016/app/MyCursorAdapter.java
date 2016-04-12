@@ -14,7 +14,6 @@ import android.widget.TextView;
 public class MyCursorAdapter extends CursorAdapter{
     private LayoutInflater inflater;
 
-
     public MyCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         inflater = LayoutInflater.from(context);
