@@ -36,10 +36,6 @@ setTitle("Muur");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
         fotoClick = (Button) findViewById(R.id.I_Button);
         fotoClick.setOnClickListener(new OnClickListener() {
 
