@@ -77,9 +77,11 @@ public class ShowNamesActivity extends AppCompatActivity {
         protected JSONArray doInBackground(String... args) {
 
             JSONArray json =
-                    JsonFromServer.getJSON("http://192.168.178.17:8080/SportTogetherBackend/GiveJSONah");
+                    JsonFromServer.getJSON("http://10.0.2.2/joodsmonument/node.json");
+
             return json;
         }
+
 
         @Override
         protected void onPostExecute(JSONArray json) {
@@ -88,18 +90,22 @@ public class ShowNamesActivity extends AppCompatActivity {
                 for (int i = 0; i < json.length(); i++) {
                     HashMap<String, String> map = new HashMap<String, String>();
                     JSONObject e = json.getJSONObject(i);
+                    String oneObjectsItem = e.getString("field_naam");
+                    Log.i("result4", oneObjectsItem);
                     map.put("id", String.valueOf(i));
-                    map.put("naam", "" + e.getString("naam"));
-                    map.put("verhaal", "" + e.getString("verhaal"));
-                    map.put("afbeelding", "" + e.getString("afbeelding"));
-                    map.put("video", "" + e.getString("video"));
+                    map.put("field_naam", "" + e.getString("field_naam"));
+                    map.put("achternaam", "" + e.getString("field_achternaam"));
+                    map.put("verhaal", "" + e.getString("field_verhaal"));
+                    map.put("afbeelding", "" + e.getString("field_afbeelding"));
+//                    map.put("video", "" + e.getString("field_video"));
 //                    map.put("location", "" + e.getString("location"));
 //                    map.put("numberparticipants", "" + e.getString("numberparticipants"));
 //                    map.put("maxparticipants", "/" + e.getString("maxparticipants"));
 //                    map.put("description", "" + e.getString("description"));
                     mylist.add(map);
                     ListAdapter adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
-                            {"naam", "verhaal", "afbeelding", "video"},
+                            {"field_naam", "verhaal", "afbeelding", "video"},
+                                   // "verhaal", "afbeelding", "video"},
                             new int[]{R.id.naam});
                     ListView lv = (ListView) findViewById(R.id.list);
                     lv.setTextFilterEnabled(true);
@@ -115,19 +121,12 @@ public class ShowNamesActivity extends AppCompatActivity {
                             String vh = mylist.get(+position).get("verhaal");
                             String ab = mylist.get(+position).get("afbeelding");
                             String vd = mylist.get(+position).get("video");
-//                            String lc = mylist.get(+position).get("location");
-//                            String np = mylist.get(+position).get("numberparticipants");
-//                            String mp = mylist.get(+position).get("maxparticipants");
-//                            String dc = mylist.get(+position).get("description");
+//
                            // Intent intent = new Intent(ShowNamesActivity.this, ShowLobby.class);
 //                            intent.putExtra("nm", nm);
 //                            intent.putExtra("vh", vh);
 //                            intent.putExtra("ab", ab);
 //                            intent.putExtra("vd", vd);
-////                            intent.putExtra("lc", lc);
-////                            intent.putExtra("np", np);
-////                            intent.putExtra("mp", mp);
-////                            intent.putExtra("dc", dc);
 //                            startActivity(intent);
                             //   ShowNamesActivity.this.finish();
                         }

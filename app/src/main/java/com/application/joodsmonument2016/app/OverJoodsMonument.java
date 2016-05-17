@@ -72,7 +72,7 @@ public class OverJoodsMonument extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.lobbies:
                 finish();
-                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
+                startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
             case R.id.lobbycreation:
                 finish();

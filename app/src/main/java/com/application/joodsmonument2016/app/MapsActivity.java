@@ -108,15 +108,19 @@ public class MapsActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.lobbies:
                 finish();
-                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
+                startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
             case R.id.lobbycreation:
                 finish();
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
                 return true;
             case R.id.muur:
-
+finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                return true;
+            case R.id.namen:
+                finish();
+                startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

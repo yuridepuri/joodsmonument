@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +17,12 @@ import java.net.URL;
  * Created by Yuri on 27-6-2015.
  */
 public class JsonFromServer {
-    public static JSONArray getJSON(String url) {
+    //public static JSONArray getJSON(String url) {
+    public static JSONArray getJSON(String url){
         String result="";
         JSONArray jArray = null;
+        JSONArray jsonArray2 = null;
+        JSONObject jsonob = null;
         HttpURLConnection conn = null;
         try {
             URL u = new URL(url);
@@ -58,13 +62,32 @@ public class JsonFromServer {
             }
         }
         try{
-            jArray = new JSONArray(result);
+            //jArray = new JSONArray(result);
+            jsonob = new JSONObject(result);
+            jArray = jsonob.getJSONArray("list");
+jsonArray2 = new JSONArray(result);
            // Gson gson = new Gson();
            // jArray=gson.toJson(result);
+
+
+
+
         }catch(JSONException e){
             Log.e("JSON exception", e.toString());
         }
+        Log.i("ARRRRAAAAY", String.valueOf(jArray.length()));
         Log.i("result2", result);
+        for (int i = 0; i < jArray.length(); i++) {
+            try{
+                JSONObject oneObject = jArray.getJSONObject(i);
+                String oneObjectsItem = oneObject.getString("field_naam");
+                Log.i("result3", oneObjectsItem);
+            }catch (JSONException e){
+
+            }
+
+        }
+
         return jArray;
     }
 
