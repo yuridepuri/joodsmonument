@@ -96,7 +96,7 @@ public class ShowNamesActivity extends AppCompatActivity {
                     map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("achternaam", "" + e.getString("field_achternaam"));
                     map.put("verhaal", "" + e.getString("field_verhaal"));
-                    map.put("afbeelding", "" + e.getString("field_afbeelding"));
+                    map.put("field_gestorven", "" + e.getString("field_gestorven"));
 //                    map.put("video", "" + e.getString("field_video"));
 //                    map.put("location", "" + e.getString("location"));
 //                    map.put("numberparticipants", "" + e.getString("numberparticipants"));
@@ -104,9 +104,10 @@ public class ShowNamesActivity extends AppCompatActivity {
 //                    map.put("description", "" + e.getString("description"));
                     mylist.add(map);
                     ListAdapter adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
-                            {"field_naam", "verhaal", "afbeelding", "video"},
+                            {"field_naam", "field_gestorven"},
+                                    //"verhaal", "afbeelding", "gestorven"},
                                    // "verhaal", "afbeelding", "video"},
-                            new int[]{R.id.naam});
+                            new int[]{R.id.naam, R.id.gestorven});
                     ListView lv = (ListView) findViewById(R.id.list);
                     lv.setTextFilterEnabled(true);
                     lv.setAdapter(adapter);
