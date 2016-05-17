@@ -96,7 +96,7 @@ public class ShowNamesActivity extends AppCompatActivity {
                     map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("achternaam", "" + e.getString("field_achternaam"));
                     map.put("verhaal", "" + e.getString("field_verhaal"));
-                    map.put("field_gestorven", "" + e.getString("field_gestorven"));
+                    map.put("field_gestorven", "† " + e.getString("field_gestorven"));
 //                    map.put("video", "" + e.getString("field_video"));
 //                    map.put("location", "" + e.getString("location"));
 //                    map.put("numberparticipants", "" + e.getString("numberparticipants"));
@@ -118,8 +118,8 @@ public class ShowNamesActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view,
                                                 int position, long id) {
                             //   Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("lobbyid"), Toast.LENGTH_SHORT).show();
-                            String nm = mylist.get(+position).get("naam");
-                            String vh = mylist.get(+position).get("verhaal");
+                            String nm = mylist.get(+position).get("field_naam");
+                            String vh = mylist.get(+position).get("field_achternaam");
                             String ab = mylist.get(+position).get("afbeelding");
                             String vd = mylist.get(+position).get("video");
 //
