@@ -6,10 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -26,14 +29,37 @@ public class ShowNamesActivity extends AppCompatActivity {
     //ArrayList<String> listdata;
     ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
     private Handler handler;
-
-
+    EditText inputSearch;
+    SimpleAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names_view);
         new JsonParse().execute();
+        inputSearch = (EditText)findViewById(R.id.inputSearch);
+
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ShowNamesActivity.this.adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
     }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,7 +129,8 @@ public class ShowNamesActivity extends AppCompatActivity {
 //                    map.put("maxparticipants", "/" + e.getString("maxparticipants"));
 //                    map.put("description", "" + e.getString("description"));
                     mylist.add(map);
-                    ListAdapter adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
+                    //ListAdapter
+                            adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
                             {"field_naam", "field_gestorven"},
                                     //"verhaal", "afbeelding", "gestorven"},
                                    // "verhaal", "afbeelding", "video"},

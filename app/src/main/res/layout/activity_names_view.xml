@@ -7,13 +7,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ShowNamesActivity">
-
+    <!-- Editext for Search -->
+    <EditText android:id="@+id/inputSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zoek naam.."
+        android:inputType="textVisiblePassword"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list"
-        android:divider="@android:color/holo_blue_bright"
+        android:divider="@android:color/holo_red_dark"
         android:dividerHeight="1.0sp"
-        ></ListView>
+        android:layout_below="@+id/inputSearch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></ListView>
 </RelativeLayout>
