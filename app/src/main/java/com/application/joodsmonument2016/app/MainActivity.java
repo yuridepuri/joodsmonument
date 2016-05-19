@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
-            case R.id.lobbies:
+            case R.id.namen:
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
@@ -40,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
                 return true;
             case R.id.muur:
-
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 return true;
             default:

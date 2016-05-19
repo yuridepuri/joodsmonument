@@ -121,8 +121,8 @@ public class ShowNamesActivity extends AppCompatActivity {
                     String oneObjectsItem = e.getString("field_naam");
                     String twoObjectsItem = e.getString("field_achternaam");
                     String volnaam = oneObjectsItem+" "+twoObjectsItem;
-                    Log.i("result5", volnaam);
-                    Log.i("result4", oneObjectsItem);
+ Log.i("result5", volnaam);
+//                    Log.i("result4", oneObjectsItem);
                     map.put("id", String.valueOf(i));
                    // map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("field_naam", "" + volnaam);
