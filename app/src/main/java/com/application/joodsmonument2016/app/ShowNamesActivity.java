@@ -2,6 +2,7 @@ package com.application.joodsmonument2016.app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,8 +37,9 @@ public class ShowNamesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names_view);
         new JsonParse().execute();
-        inputSearch = (EditText)findViewById(R.id.inputSearch);
 
+        inputSearch = (EditText)findViewById(R.id.inputSearch);
+        inputSearch.getBackground().mutate().setColorFilter(getResources().getColor(R.color.material_deep_teal_500), PorterDuff.Mode.SRC_ATOP);
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -117,9 +119,13 @@ public class ShowNamesActivity extends AppCompatActivity {
                     HashMap<String, String> map = new HashMap<String, String>();
                     JSONObject e = json.getJSONObject(i);
                     String oneObjectsItem = e.getString("field_naam");
+                    String twoObjectsItem = e.getString("field_achternaam");
+                    String volnaam = oneObjectsItem+" "+twoObjectsItem;
+                    Log.i("result5", volnaam);
                     Log.i("result4", oneObjectsItem);
                     map.put("id", String.valueOf(i));
-                    map.put("field_naam", "" + e.getString("field_naam"));
+                   // map.put("field_naam", "" + e.getString("field_naam"));
+                    map.put("field_naam", "" + volnaam);
                     map.put("achternaam", "" + e.getString("field_achternaam"));
                     map.put("verhaal", "" + e.getString("field_verhaal"));
                     map.put("field_gestorven", "† " + e.getString("field_gestorven"));
