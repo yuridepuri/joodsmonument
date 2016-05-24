@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/FrameLayout1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    >
+    android:layout_height="match_parent">
 
-    <ImageView
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/joodsmonument3"
         android:scaleType="centerCrop"
+        
         />
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/LinearLayout1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
+</RelativeLayout>
 
-    <!--</LinearLayout>-->
+<!--<FrameLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/FrameLayout1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--&gt;-->
+    <!---->
 
-</FrameLayout>
+    <!--<ImageView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:src="@drawable/joodsmonument3"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--/>-->
+
+    <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/LinearLayout1"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:orientation="vertical"&ndash;&gt;-->
+        <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+<!--</FrameLayout>-->

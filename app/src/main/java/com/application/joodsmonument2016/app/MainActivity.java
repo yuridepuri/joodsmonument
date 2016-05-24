@@ -8,15 +8,56 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+
+import java.util.HashMap;
+
 /**
  * Created by Jaarbeurs on 29-4-2016.
  */
 public class MainActivity extends ActionBarActivity {
+private SliderLayout sliderShow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        sliderShow = (SliderLayout)findViewById(R.id.slider);
+
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Afbeelding 1",R.drawable.joodsmonument1);
+        file_maps.put("Afbeelding 2",R.drawable.joodsmonument2);
+        file_maps.put("Afbeelding 3",R.drawable.joodsmonument3);
+
+        TextSliderView textSliderView= new TextSliderView(this);
+TextSliderView textSliderView1 = new TextSliderView(this);
+        TextSliderView textSliderView2 = new TextSliderView(this);
+
+        textSliderView
+//                .description("Afbeelding1")
+                .image(R.drawable.joodsmonument1);
+
+        textSliderView1
+//                .description("Afbeelding2")
+                .image(R.drawable.joodsmonument2);
+
+        textSliderView2
+//                .description("Afbeelding3")
+                .image(R.drawable.joodsmonument3);
+
+
+        sliderShow.addSlider(textSliderView);
+sliderShow.addSlider(textSliderView1);
+        sliderShow.addSlider(textSliderView2);
+sliderShow.startAutoCycle();
     }
+
+    @Override
+    protected void onStop() {
+        sliderShow.stopAutoCycle();
+        super.onStop();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
