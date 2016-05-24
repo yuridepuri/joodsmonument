@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -122,7 +123,7 @@ public class ShowNamesActivity extends AppCompatActivity {
                     String twoObjectsItem = e.getString("field_achternaam");
                     String volnaam = oneObjectsItem+" "+twoObjectsItem;
  Log.i("result5", volnaam);
-//                    Log.i("result4", oneObjectsItem);
+
                     map.put("id", String.valueOf(i));
                    // map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("field_naam", "" + volnaam);
@@ -150,19 +151,19 @@ public class ShowNamesActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view,
                                                 int position, long id) {
-                            //   Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("lobbyid"), Toast.LENGTH_SHORT).show();
+                               Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
                             String nm = mylist.get(+position).get("field_naam");
-                            String vh = mylist.get(+position).get("field_achternaam");
+                            String an = mylist.get(+position).get("field_achternaam");
                             String ab = mylist.get(+position).get("afbeelding");
                             String vd = mylist.get(+position).get("video");
 //
-                           // Intent intent = new Intent(ShowNamesActivity.this, ShowLobby.class);
-//                            intent.putExtra("nm", nm);
-//                            intent.putExtra("vh", vh);
-//                            intent.putExtra("ab", ab);
-//                            intent.putExtra("vd", vd);
-//                            startActivity(intent);
-                            //   ShowNamesActivity.this.finish();
+                            Intent intent = new Intent(ShowNamesActivity.this, ReadStoryActivity.class);
+                            intent.putExtra("nm", nm);
+                            intent.putExtra("an", an);
+                            intent.putExtra("ab", ab);
+                            intent.putExtra("vd", vd);
+                            startActivity(intent);
+                               ShowNamesActivity.this.finish();
                         }
                     });
                 }

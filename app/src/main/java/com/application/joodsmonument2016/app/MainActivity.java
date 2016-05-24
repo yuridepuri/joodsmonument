@@ -78,10 +78,11 @@ sliderShow.startAutoCycle();
                 return true;
             case R.id.lobbycreation:
                 finish();
-                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                startActivity(new Intent(getApplicationContext(), ReadStoryActivity.class));
                 return true;
             case R.id.muur:
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

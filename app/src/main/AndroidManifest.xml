@@ -48,6 +48,12 @@
             android:label="@string/app_name">
 
         </activity>
+
+        <activity
+            android:name=".ReadStoryActivity"
+            android:label="@string/app_name">
+
+        </activity>
         <activity
             android:name=".Splash"
 
