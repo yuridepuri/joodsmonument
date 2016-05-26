@@ -122,7 +122,15 @@ public class ShowNamesActivity extends AppCompatActivity {
                     String oneObjectsItem = e.getString("field_naam");
                     String twoObjectsItem = e.getString("field_achternaam");
                     String volnaam = oneObjectsItem+" "+twoObjectsItem;
- Log.i("result5", volnaam);
+
+                   Object item = e.get("field_afbeelding");
+                    if(item instanceof JSONArray){
+                    }else{
+                        JSONObject afb = e.getJSONObject("field_afbeelding").getJSONObject("file");
+                        String afbeelding = afb.getString("uri");
+                        Log.i("result5", String.valueOf(afb.length()));
+                        Log.i("result6", String.valueOf(afbeelding));
+                    }
 
                     map.put("id", String.valueOf(i));
                    // map.put("field_naam", "" + e.getString("field_naam"));
@@ -153,7 +161,7 @@ public class ShowNamesActivity extends AppCompatActivity {
                                                 int position, long id) {
                                Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
                             String nm = mylist.get(+position).get("field_naam");
-                            String an = mylist.get(+position).get("field_achternaam");
+                            String an = mylist.get(+position).get("achternaam");
                             String ab = mylist.get(+position).get("afbeelding");
                             String vd = mylist.get(+position).get("video");
 //

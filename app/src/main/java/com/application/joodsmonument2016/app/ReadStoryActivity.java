@@ -21,7 +21,7 @@ public class ReadStoryActivity extends AppCompatActivity {
         String achternaam = intent.getStringExtra("an");
 
 
-        Log.i("intentstring", naam+achternaam);
+        Log.i("intentstring", achternaam);
 
 
 

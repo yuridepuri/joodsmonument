@@ -65,7 +65,7 @@ public class JsonFromServer {
             //jArray = new JSONArray(result);
             jsonob = new JSONObject(result);
             jArray = jsonob.getJSONArray("list");
-jsonArray2 = new JSONArray(result);
+//jsonArray2 = new JSONArray(result);
            // Gson gson = new Gson();
            // jArray=gson.toJson(result);
 
