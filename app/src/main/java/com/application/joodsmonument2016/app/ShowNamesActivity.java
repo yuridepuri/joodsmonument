@@ -33,6 +33,7 @@ public class ShowNamesActivity extends AppCompatActivity {
     private Handler handler;
     EditText inputSearch;
     SimpleAdapter adapter;
+    String afbeelding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,27 +123,26 @@ public class ShowNamesActivity extends AppCompatActivity {
                     String oneObjectsItem = e.getString("field_naam");
                     String twoObjectsItem = e.getString("field_achternaam");
                     String volnaam = oneObjectsItem+" "+twoObjectsItem;
-
                    Object item = e.get("field_afbeelding");
                     if(item instanceof JSONArray){
                     }else{
                         JSONObject afb = e.getJSONObject("field_afbeelding").getJSONObject("file");
-                        String afbeelding = afb.getString("uri");
+                         afbeelding = afb.getString("uri");
                         Log.i("result5", String.valueOf(afb.length()));
-                        Log.i("result6", String.valueOf(afbeelding));
+                        Log.i("result6", afbeelding);
                     }
 
+//                    Log.i("result7", afbeelding);
                     map.put("id", String.valueOf(i));
                    // map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("field_naam", "" + volnaam);
                     map.put("achternaam", "" + e.getString("field_achternaam"));
+                    map.put("afbeelding", "" + afbeelding);
                     map.put("verhaal", "" + e.getString("field_verhaal"));
+                    map.put("geboren", "" + e.getString("field_geboren"));
                     map.put("field_gestorven", "† " + e.getString("field_gestorven"));
-//                    map.put("video", "" + e.getString("field_video"));
-//                    map.put("location", "" + e.getString("location"));
-//                    map.put("numberparticipants", "" + e.getString("numberparticipants"));
-//                    map.put("maxparticipants", "/" + e.getString("maxparticipants"));
-//                    map.put("description", "" + e.getString("description"));
+                    map.put("locatie", "" + e.getString("field_plaats_"));
+
                     mylist.add(map);
                     //ListAdapter
                             adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
@@ -159,19 +159,32 @@ public class ShowNamesActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view,
                                                 int position, long id) {
-                               Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
+                               //Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
+
                             String nm = mylist.get(+position).get("field_naam");
                             String an = mylist.get(+position).get("achternaam");
+                            String vh = mylist.get(+position).get("verhaal");
                             String ab = mylist.get(+position).get("afbeelding");
-                            String vd = mylist.get(+position).get("video");
-//
+                            String gb = mylist.get(+position).get("geboren");
+                            String gs = mylist.get(+position).get("field_gestorven");
+                            String lc = mylist.get(+position).get("locatie");
+                           // String vd = mylist.get(+position).get("video");
+                            if(vh.equals(null)||vh.equals("null")){
+                                Toast.makeText(ShowNamesActivity.this, "No story on this one! " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
+                            }
+                            else{
                             Intent intent = new Intent(ShowNamesActivity.this, ReadStoryActivity.class);
                             intent.putExtra("nm", nm);
                             intent.putExtra("an", an);
-                            intent.putExtra("ab", ab);
-                            intent.putExtra("vd", vd);
+                            intent.putExtra("vh", vh);
+                             intent.putExtra("ab", ab);
+                            intent.putExtra("gb", gb);
+                            intent.putExtra("gs", gs);
+                            intent.putExtra("lc", lc);
+                            //intent.putExtra("vd", vd);
                             startActivity(intent);
-                               ShowNamesActivity.this.finish();
+                              // ShowNamesActivity.this.finish();
+                            }
                         }
                     });
                 }
