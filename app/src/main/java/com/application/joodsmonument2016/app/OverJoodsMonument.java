@@ -21,7 +21,7 @@ public class OverJoodsMonument extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.over_joods_monument_layout);
         b1 = (Button)findViewById(R.id.button1);
-        b2 = (Button)findViewById(R.id.button2);
+//        b2 = (Button)findViewById(R.id.button2);
 
         b1.setOnClickListener(new View.OnClickListener() {
 
@@ -31,13 +31,13 @@ public class OverJoodsMonument extends ActionBarActivity {
             }
         });
         setTitle("Over");
-        b2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                toSiteSpoorwegmuseum();
-            }
-        });
+//        b2.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                toSiteSpoorwegmuseum();
+//            }
+//        });
 
     }
 
