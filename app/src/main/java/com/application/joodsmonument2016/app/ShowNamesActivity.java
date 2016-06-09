@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,10 +31,19 @@ import java.util.HashMap;
 public class ShowNamesActivity extends AppCompatActivity {
     //ArrayList<String> listdata;
     ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+
     private Handler handler;
     EditText inputSearch;
     SimpleAdapter adapter;
     String afbeelding;
+
+    public int TOTAL_LIST_ITEMS = 1030;
+    public int NUM_ITEMS_PAGE   = 100;
+    private int noOfBtns;
+    private Button[] btns;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
