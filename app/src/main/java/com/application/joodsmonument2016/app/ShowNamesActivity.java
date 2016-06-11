@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -37,7 +39,8 @@ public class ShowNamesActivity extends AppCompatActivity {
     SimpleAdapter adapter;
     String afbeelding;
     private int increment =0;
-
+    private GestureDetector gestureDetector;
+    private static final int LARGE_MOVE = 100;
     public int NUM_ITEMS;
     public int NUM_PAGES;
     public static final int NUM_ITEMS_PER_PAGE = 30;
@@ -71,13 +74,31 @@ public class ShowNamesActivity extends AppCompatActivity {
             }
         });
 
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() > LARGE_MOVE) {
+                    // Fling naar links
+                    increment++;
+                    showPage(increment);
+                    Log.i("inc", Integer.toString(increment) );
+
+
+                } else if (e2.getX() - e1.getX() > LARGE_MOVE) {
+                    increment--;
+                    showPage(increment);
+                }
+
+                return false;
+            }
+        });
+        
         btn_next.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
                 increment++;
                 showPage(increment);
-                Log.i("inc", Integer.toString(increment) );
             }
         });
 
@@ -92,6 +113,14 @@ public class ShowNamesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+
+        View v = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+        //return ret;
+        return gestureDetector.onTouchEvent(event);
+    }
 
 
 //    @Override
