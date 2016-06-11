@@ -30,17 +30,18 @@ import java.util.HashMap;
 
 public class ShowNamesActivity extends AppCompatActivity {
     //ArrayList<String> listdata;
-    ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
-
+    ArrayList<ArrayList<HashMap<String, String>>> listOfPages = new ArrayList<ArrayList<HashMap<String, String>>>();
+    ArrayList<HashMap<String, String>> myPage;
     private Handler handler;
     EditText inputSearch;
     SimpleAdapter adapter;
     String afbeelding;
+    private int increment =0;
 
-    public int TOTAL_LIST_ITEMS = 1030;
-    public int NUM_ITEMS_PAGE   = 100;
-    private int noOfBtns;
-    private Button[] btns;
+    public int NUM_ITEMS;
+    public int NUM_PAGES;
+    public static final int NUM_ITEMS_PER_PAGE = 30;
+
 
 
 
@@ -49,7 +50,8 @@ public class ShowNamesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names_view);
         new JsonParse().execute();
-
+        Button btn_prev     = (Button)findViewById(R.id.prev);
+        Button btn_next     = (Button)findViewById(R.id.next);
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         inputSearch.getBackground().mutate().setColorFilter(getResources().getColor(R.color.material_deep_teal_500), PorterDuff.Mode.SRC_ATOP);
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -69,7 +71,24 @@ public class ShowNamesActivity extends AppCompatActivity {
             }
         });
 
+        btn_next.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View v) {
+
+                increment++;
+                showPage(increment);
+                Log.i("inc", Integer.toString(increment) );
+            }
+        });
+
+        btn_prev.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                increment--;
+               showPage(increment);
+            }
+        });
 
     }
 
@@ -118,33 +137,34 @@ public class ShowNamesActivity extends AppCompatActivity {
 
             JSONArray json =
                     JsonFromServer.getJSON("http://10.0.2.2/joodsmonument/node.json");
+            NUM_ITEMS = json.length();
 
-            return json;
-        }
-
-
-        @Override
-        protected void onPostExecute(JSONArray json) {
-            pDialog.dismiss();
             try {
-                for (int i = 0; i < json.length(); i++) {
+
+                for (int i = 0; i < NUM_ITEMS; i++) {
+                    if (i % NUM_ITEMS_PER_PAGE == 0) {
+                        int pageNr = i / NUM_ITEMS_PER_PAGE;
+                        NUM_PAGES = pageNr;
+                        myPage = new ArrayList <HashMap<String, String>>();
+                         listOfPages.add(myPage);
+                    }
                     HashMap<String, String> map = new HashMap<String, String>();
                     JSONObject e = json.getJSONObject(i);
                     String oneObjectsItem = e.getString("field_naam");
                     String twoObjectsItem = e.getString("field_achternaam");
-                    String volnaam = oneObjectsItem+" "+twoObjectsItem;
-                   Object item = e.get("field_afbeelding");
-                    if(item instanceof JSONArray){
-                    }else{
+                    String volnaam = oneObjectsItem + " " + twoObjectsItem;
+                    Object item = e.get("field_afbeelding");
+                    if (item instanceof JSONArray) {
+                    } else {
                         JSONObject afb = e.getJSONObject("field_afbeelding").getJSONObject("file");
-                         afbeelding = afb.getString("uri");
+                        afbeelding = afb.getString("uri");
                         Log.i("result5", String.valueOf(afb.length()));
                         Log.i("result6", afbeelding);
                     }
 
-//                    Log.i("result7", afbeelding);
+                    //                    Log.i("result7", afbeelding);
                     map.put("id", String.valueOf(i));
-                   // map.put("field_naam", "" + e.getString("field_naam"));
+                    // map.put("field_naam", "" + e.getString("field_naam"));
                     map.put("field_naam", "" + volnaam);
                     map.put("achternaam", "" + e.getString("field_achternaam"));
                     map.put("afbeelding", "" + afbeelding);
@@ -153,59 +173,84 @@ public class ShowNamesActivity extends AppCompatActivity {
                     map.put("field_gestorven", "† " + e.getString("field_gestorven"));
                     map.put("locatie", "" + e.getString("field_plaats_"));
 
-                    mylist.add(map);
-                    //ListAdapter
-                            adapter = new SimpleAdapter(ShowNamesActivity.this, mylist, R.layout.names_list_items, new String[]
-                            {"field_naam", "field_gestorven"},
-                                    //"verhaal", "afbeelding", "gestorven"},
-                                   // "verhaal", "afbeelding", "video"},
-                            new int[]{R.id.naam, R.id.gestorven});
-                    ListView lv = (ListView) findViewById(R.id.list);
-                    lv.setTextFilterEnabled(true);
-                    lv.setAdapter(adapter);
+                    myPage.add(map);
 
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view,
-                                                int position, long id) {
-                               //Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
-
-                            String nm = mylist.get(+position).get("field_naam");
-                            String an = mylist.get(+position).get("achternaam");
-                            String vh = mylist.get(+position).get("verhaal");
-                            String ab = mylist.get(+position).get("afbeelding");
-                            String gb = mylist.get(+position).get("geboren");
-                            String gs = mylist.get(+position).get("field_gestorven");
-                            String lc = mylist.get(+position).get("locatie");
-                           // String vd = mylist.get(+position).get("video");
-                            if(vh.equals(null)||vh.equals("null")){
-                                Toast.makeText(ShowNamesActivity.this, "No story on this one! " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                            Intent intent = new Intent(ShowNamesActivity.this, ReadStoryActivity.class);
-                            intent.putExtra("nm", nm);
-                            intent.putExtra("an", an);
-                            intent.putExtra("vh", vh);
-                             intent.putExtra("ab", ab);
-                            intent.putExtra("gb", gb);
-                            intent.putExtra("gs", gs);
-                            intent.putExtra("lc", lc);
-                            //intent.putExtra("vd", vd);
-                            startActivity(intent);
-                              // ShowNamesActivity.this.finish();
-                            }
-                        }
-                    });
-                }
-            } catch (
-                    JSONException e
-                    )
-
-            {
+                }//for-lus
+                return json;
+            } catch (JSONException e) {
                 Log.e("Json exception", e.toString());
+                return null;
             }
 
         }
+
+
+        @Override
+        protected void onPostExecute (JSONArray json){
+            pDialog.dismiss();
+            showPage(0);
+        }
     }
+
+    private void showPage(int pagenr){
+        /*myPage = listOfPages.get(pagenr);*/
+        Log.i("number of pages", Integer.toString(listOfPages.size()));
+
+int start = pagenr * NUM_ITEMS_PER_PAGE;
+        for(int i=start; i<(start)+NUM_ITEMS_PER_PAGE;i++){
+         //   if(i< listOfPages.size()){
+                myPage = listOfPages.get(pagenr);
+         //   }
+         //   else{
+         //       break;
+        //    }
+        }
+        //ListAdapter
+        adapter = new SimpleAdapter(ShowNamesActivity.this,
+                myPage,
+                R.layout.names_list_items,
+                new String[] {"field_naam", "field_gestorven"},
+                //"verhaal", "afbeelding", "gestorven"},
+                // "verhaal", "afbeelding", "video"},
+                new int[]{R.id.naam, R.id.gestorven});
+        ListView lv = (ListView) findViewById(R.id.list);
+        lv.setTextFilterEnabled(true);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(ShowNamesActivity.this, "You Clicked at " + mylist.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
+
+                String nm = myPage.get(+position).get("field_naam");
+                String an = myPage.get(+position).get("achternaam");
+                String vh = myPage.get(+position).get("verhaal");
+                String ab = myPage.get(+position).get("afbeelding");
+                String gb = myPage.get(+position).get("geboren");
+                String gs = myPage.get(+position).get("field_gestorven");
+                String lc = myPage.get(+position).get("locatie");
+                // String vd = mylist.get(+position).get("video");
+                if(vh.equals(null)||vh.equals("null")){
+                    Toast.makeText(ShowNamesActivity.this, "No story on this one! " + myPage.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(ShowNamesActivity.this, ReadStoryActivity.class);
+                    intent.putExtra("nm", nm);
+                    intent.putExtra("an", an);
+                    intent.putExtra("vh", vh);
+                    intent.putExtra("ab", ab);
+                    intent.putExtra("gb", gb);
+                    intent.putExtra("gs", gs);
+                    intent.putExtra("lc", lc);
+                    //intent.putExtra("vd", vd);
+                    startActivity(intent);
+                    // ShowNamesActivity.this.finish();
+                }
+            }
+        });
+    }
+
+
 }
