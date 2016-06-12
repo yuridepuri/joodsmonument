@@ -2,20 +2,24 @@ package com.application.joodsmonument2016.app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -46,7 +50,7 @@ public class ShowNamesActivity extends AppCompatActivity {
     public int NUM_PAGES;
     public static final int NUM_ITEMS_PER_PAGE = 30;
     private TextView title;
-
+CheckBox checkbox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,8 @@ public class ShowNamesActivity extends AppCompatActivity {
         new JsonParse().execute();
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         title = (TextView) findViewById(R.id.title);
+checkbox = (CheckBox) findViewById(R.id.checkbox);
+
 //        inputSearch.getBackground().mutate().setColorFilter(getResources().getColor(R.color.material_deep_teal_500), PorterDuff.Mode.SRC_ATOP);
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,30 +120,37 @@ public class ShowNamesActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_lobby, menu);
-//        return true;
-//    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
-            case R.id.lobbies:
+            case R.id.namen:
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
-//            case R.id.lobbycreation:
-//                startActivity(new Intent(getApplicationContext(), MakeLobby.class));
-//                return true;
+            case R.id.over:
+                finish();
+                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
+                return true;
+            case R.id.muur:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     private class JsonParse extends AsyncTask<String, String, JSONArray> {
@@ -188,9 +201,16 @@ public class ShowNamesActivity extends AppCompatActivity {
                     map.put("field_naam", "" + volnaam);
                     map.put("achternaam", "" + e.getString("field_achternaam"));
                     map.put("afbeelding", "" + afbeelding);
+                    if(e.getString("field_verhaal").equals("null")){
+                        map.put("field_gestorven", "† " + e.getString("field_gestorven"));
+                    }
+                    else{
+                        map.put("field_gestorven", "✡ † " + e.getString("field_gestorven"));
+
+                    }
                     map.put("verhaal", "" + e.getString("field_verhaal"));
                     map.put("geboren", "" + e.getString("field_geboren"));
-                    map.put("field_gestorven", "† " + e.getString("field_gestorven"));
+                    //map.put("field_gestorven", "† " + e.getString("field_gestorven"));
                     map.put("locatie", "" + e.getString("field_plaats_"));
 
                     myPage.add(map);
@@ -250,6 +270,7 @@ public class ShowNamesActivity extends AppCompatActivity {
                 String gb = myPage.get(+position).get("geboren");
                 String gs = myPage.get(+position).get("field_gestorven");
                 String lc = myPage.get(+position).get("locatie");
+
                 // String vd = mylist.get(+position).get("video");
                 if (vh.equals(null) || vh.equals("null")) {
                     Toast.makeText(ShowNamesActivity.this, "No story on this one! " + myPage.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();

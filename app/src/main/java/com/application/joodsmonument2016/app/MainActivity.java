@@ -76,9 +76,9 @@ sliderShow.startAutoCycle();
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
-            case R.id.lobbycreation:
+            case R.id.over:
                 finish();
-                startActivity(new Intent(getApplicationContext(), ReadStoryActivity.class));
+                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
                 return true;
             case R.id.muur:
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));

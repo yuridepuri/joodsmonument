@@ -70,17 +70,17 @@ public class OverJoodsMonument extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
-            case R.id.lobbies:
+            case R.id.namen:
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
                 return true;
-            case R.id.lobbycreation:
+            case R.id.over:
                 finish();
-                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
                 return true;
             case R.id.muur:
-
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -106,14 +106,14 @@ public class MapsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
-            case R.id.lobbies:
+            /*case R.id.lobbies:
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
-                return true;
-            case R.id.lobbycreation:
-                finish();
-                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
-                return true;
+                return true;*/
+//            case R.id.lobbycreation:
+//                finish();
+//                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+//                return true;
             case R.id.muur:
 finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
