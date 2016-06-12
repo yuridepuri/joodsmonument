@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -38,25 +39,22 @@ public class ShowNamesActivity extends AppCompatActivity {
     EditText inputSearch;
     SimpleAdapter adapter;
     String afbeelding;
-    private int increment =0;
+    private int increment = 0;
     private GestureDetector gestureDetector;
     private static final int LARGE_MOVE = 100;
     public int NUM_ITEMS;
     public int NUM_PAGES;
     public static final int NUM_ITEMS_PER_PAGE = 30;
-
-
-
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names_view);
         new JsonParse().execute();
-        Button btn_prev     = (Button)findViewById(R.id.prev);
-        Button btn_next     = (Button)findViewById(R.id.next);
-        inputSearch = (EditText)findViewById(R.id.inputSearch);
-        inputSearch.getBackground().mutate().setColorFilter(getResources().getColor(R.color.material_deep_teal_500), PorterDuff.Mode.SRC_ATOP);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
+        title = (TextView) findViewById(R.id.title);
+//        inputSearch.getBackground().mutate().setColorFilter(getResources().getColor(R.color.material_deep_teal_500), PorterDuff.Mode.SRC_ATOP);
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -79,38 +77,31 @@ public class ShowNamesActivity extends AppCompatActivity {
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() > LARGE_MOVE) {
                     // Fling naar links
-                    increment++;
-                    showPage(increment);
-                    Log.i("inc", Integer.toString(increment) );
-
+                    if (increment < (NUM_PAGES)) {
+                        increment++;
+                        showPage(increment);
+                        Log.i("inc", Integer.toString(increment));
+                        Log.i("pagecunt", Integer.toString(NUM_PAGES));
+                    } else if(increment==(NUM_PAGES)){
+                        increment = 0;
+                        showPage(increment);
+                    }
 
                 } else if (e2.getX() - e1.getX() > LARGE_MOVE) {
-                    increment--;
-                    showPage(increment);
+                    if(increment==0){
+                        increment=NUM_PAGES;
+                        showPage(increment);
+                    }
+                    else{
+                        increment--;
+                        showPage(increment);
+                    }
+
                 }
 
                 return false;
             }
         });
-        
-        btn_next.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-
-                increment++;
-                showPage(increment);
-            }
-        });
-
-        btn_prev.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-
-                increment--;
-               showPage(increment);
-            }
-        });
-
     }
 
     @Override
@@ -174,8 +165,8 @@ public class ShowNamesActivity extends AppCompatActivity {
                     if (i % NUM_ITEMS_PER_PAGE == 0) {
                         int pageNr = i / NUM_ITEMS_PER_PAGE;
                         NUM_PAGES = pageNr;
-                        myPage = new ArrayList <HashMap<String, String>>();
-                         listOfPages.add(myPage);
+                        myPage = new ArrayList<HashMap<String, String>>();
+                        listOfPages.add(myPage);
                     }
                     HashMap<String, String> map = new HashMap<String, String>();
                     JSONObject e = json.getJSONObject(i);
@@ -215,30 +206,29 @@ public class ShowNamesActivity extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute (JSONArray json){
+        protected void onPostExecute(JSONArray json) {
             pDialog.dismiss();
             showPage(0);
         }
     }
 
-    private void showPage(int pagenr){
+    private void showPage(int pagenr) {
         /*myPage = listOfPages.get(pagenr);*/
         Log.i("number of pages", Integer.toString(listOfPages.size()));
-
-int start = pagenr * NUM_ITEMS_PER_PAGE;
-        for(int i=start; i<(start)+NUM_ITEMS_PER_PAGE;i++){
-         //   if(i< listOfPages.size()){
+        title.setText("Pagina " + (pagenr + 1) + " van " + Integer.toString(listOfPages.size()));
+        int start = pagenr * NUM_ITEMS_PER_PAGE;
+        for (int i = start; i < (start) + NUM_ITEMS_PER_PAGE; i++) {
+            if (pagenr < listOfPages.size()) {
                 myPage = listOfPages.get(pagenr);
-         //   }
-         //   else{
-         //       break;
-        //    }
+            } else {
+                break;
+            }
         }
         //ListAdapter
         adapter = new SimpleAdapter(ShowNamesActivity.this,
                 myPage,
                 R.layout.names_list_items,
-                new String[] {"field_naam", "field_gestorven"},
+                new String[]{"field_naam", "field_gestorven"},
                 //"verhaal", "afbeelding", "gestorven"},
                 // "verhaal", "afbeelding", "video"},
                 new int[]{R.id.naam, R.id.gestorven});
@@ -261,10 +251,11 @@ int start = pagenr * NUM_ITEMS_PER_PAGE;
                 String gs = myPage.get(+position).get("field_gestorven");
                 String lc = myPage.get(+position).get("locatie");
                 // String vd = mylist.get(+position).get("video");
-                if(vh.equals(null)||vh.equals("null")){
+                if (vh.equals(null) || vh.equals("null")) {
                     Toast.makeText(ShowNamesActivity.this, "No story on this one! " + myPage.get(+position).get("field_naam"), Toast.LENGTH_SHORT).show();
-                }
-                else{
+
+
+                } else {
                     Intent intent = new Intent(ShowNamesActivity.this, ReadStoryActivity.class);
                     intent.putExtra("nm", nm);
                     intent.putExtra("an", an);
