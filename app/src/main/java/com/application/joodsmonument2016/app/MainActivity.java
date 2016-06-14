@@ -84,6 +84,10 @@ sliderShow.startAutoCycle();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
                 return true;
+            case R.id.locatie:
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

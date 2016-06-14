@@ -147,6 +147,10 @@ checkbox = (CheckBox) findViewById(R.id.checkbox);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
                 return true;
+            case R.id.locatie:
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -205,7 +209,7 @@ checkbox = (CheckBox) findViewById(R.id.checkbox);
                         map.put("field_gestorven", "† " + e.getString("field_gestorven"));
                     }
                     else{
-                        map.put("field_gestorven", "✡ † " + e.getString("field_gestorven"));
+                        map.put("field_gestorven", "✐ † " + e.getString("field_gestorven"));
 
                     }
                     map.put("verhaal", "" + e.getString("field_verhaal"));

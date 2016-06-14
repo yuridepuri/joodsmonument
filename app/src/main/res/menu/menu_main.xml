@@ -8,6 +8,8 @@
         />
     <item android:id="@+id/over"
         android:title="Over"/>
+    <item android:id="@+id/locatie"
+        android:title="Locatie"/>
     <!--<item android:id="@+id/lobbycreation"-->
         <!--android:title="Route" />-->
     <!--<item android:id="@+id/lobbies"-->

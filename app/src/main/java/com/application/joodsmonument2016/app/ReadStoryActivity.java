@@ -28,7 +28,8 @@ public class ReadStoryActivity extends AppCompatActivity {
         String achternaam = intent.getStringExtra("an");
         String verhaal = intent.getStringExtra("vh");
 String geboren = intent.getStringExtra("gb");
-        String gestorven = intent.getStringExtra("gs");
+        String gestorvenlogo = intent.getStringExtra("gs");
+        String gestorven = gestorvenlogo.substring(2);
 String locatie = intent.getStringExtra("lc");
 
 

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends ActionBarActivity {
@@ -73,29 +74,29 @@ public class MapsActivity extends ActionBarActivity {
     private void setUpMap() {
         /* Toast.makeText(this, "Zet uw GPS aan zodat uw locatie gezien kan worden als de blauwe stip, zo kunt u naar het monument navigeren.", Toast.LENGTH_LONG).show();
         */
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();{
-            alertDialog.setTitle("GPS");
-            alertDialog.setMessage("Zet uw GPS aan zodat uw locatie gezien kan worden als de blauwe stip, zo kunt u naar het monument navigeren.");
-            alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // here you can add functions
-                }
-            });}
-
-        alertDialog.setIcon(R.drawable.icon);
-        alertDialog.show();
+//        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();{
+//            alertDialog.setTitle("GPS");
+//            alertDialog.setMessage("Zet uw GPS aan zodat uw locatie gezien kan worden als de blauwe stip, zo kunt u naar het monument navigeren.");
+//            alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int which) {
+//                    // here you can add functions
+//                }
+//            });}
+//
+//        alertDialog.setIcon(R.drawable.icon);
+//        alertDialog.show();
 
         /* LatLng sydney = new LatLng(-33.867, 151.206); */
-        LatLng maliebaan = new LatLng(52.08793, 5.13114);
+        LatLng joodsmonument = new LatLng(52.08793, 5.13114);
 
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(maliebaan, 9));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(joodsmonument, 15));
 
-        mMap.addMarker(new MarkerOptions()
-                .title("Station Maliebaan")
-                .snippet("Hier is de muur.")
-                .position(maliebaan));
-
+        Marker jm =       mMap.addMarker(new MarkerOptions()
+                .title("Joods Monument Utrecht")
+//                .snippet("Hier is de muur.")
+                .position(joodsmonument));
+jm.showInfoWindow();
 
     }
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,21 +107,21 @@ public class MapsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
-            /*case R.id.lobbies:
-                finish();
-                startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
-                return true;*/
-//            case R.id.lobbycreation:
-//                finish();
-//                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
-//                return true;
-            case R.id.muur:
-finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                return true;
             case R.id.namen:
                 finish();
                 startActivity(new Intent(getApplicationContext(), ShowNamesActivity.class));
+                return true;
+            case R.id.over:
+                finish();
+                startActivity(new Intent(getApplicationContext(), OverJoodsMonument.class));
+                return true;
+            case R.id.muur:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
+            case R.id.locatie:
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
